@@ -1,0 +1,245 @@
+// Fonts
+//custom classes
+@import "custom/variables";
+// Bootstrap
+@import 'modules/bootstrap';
+//animate.css
+:root {
+  --animate-duration: 1s;
+  --animate-delay: .5s;
+  --animate-repeat: 1;
+  --Iconsax-Size: 20px;
+  --Iconsax-Color: #fff;
+  --services-bg: green;
+}
+@import '~animate.css/animate.css';
+//custom base classes
+@import "custom/base";
+@import "custom/editor";
+// header
+@import "custom/header";
+//responsive
+@import "responsive";
+
+.sticky-post__detail {
+  min-height: 70px;
+}
+
+.card__title-on-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  background-position: center;
+      h5 {
+        text-shadow: 0 0 2px rgb(0 0 0 / 42%);
+      }
+      .info-part {
+        color:white !important;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: $border-radius;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 65.37%, #000000 100%);
+  }
+}
+.card__title-under-image {
+  a {
+    transition: box-shadow 0.5s ease-in-out;
+  }
+  .post-cover {
+    height: 300px;
+  }
+
+  .category-badge {
+    width: auto;
+    transform: translateY(-50%);
+    border-radius: 0 $border-radius $border-radius $border-radius;
+  }
+  &:hover {
+    a {
+      @extend .shadow-sm
+    }
+  }
+}
+
+.card__title-side-image {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.track-tab {
+  .nav-link {
+    transition: all 0.4s ease-out;
+    @extend .fs-6, .py-3, .px-4, .mb-0, .border-0;
+
+    &:hover, &.active, &:focus {
+      border-radius: 10px;
+      color: $primary;
+      box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+// comment section
+.comment-body {
+  @extend .col-md-8;
+  margin: 15px 0;
+  justify-content: start;
+  align-items: center;
+  border: 1px solid rgb(182, 182, 182);
+  padding: 30px;
+  border-radius: 12px;
+
+  p {
+    margin: 10px 0;
+  }
+  .comment-meta, .comment-author {
+    .avatar {
+      @extend .me-3, .mb-2 , .rounded , .img-thumbnail;;
+    }
+    text-align: left;
+  }
+  .reply {
+    text-align: right;
+  }
+}
+.children, .comment-list {
+  list-style: none;
+}
+.input__style {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgb(207, 207, 207);
+  padding: 15px;
+}
+
+.comment-form {
+  @extend .py-4, .row;
+
+  .comment-notes, .comment-form-comment {
+    @extend .col-12
+  }
+
+  .comment-form-author, .comment-form-email, .comment-form-url {
+    @extend .col-12, .col-lg-4;
+
+    input, textarea {
+      @extend .input__style ;
+    }
+  }
+
+}
+
+#comment {
+  @extend .input__style ;
+  height: 70px;
+  padding: 20px;
+}
+
+#submit {
+  @extend .text-white, .fw-bold, .rounded, .btn, .bg-primary, .px-5, .py-3;
+  transition: 0.5s;
+}
+
+.form-submit {
+  @extend .text-end
+}
+
+//rating section
+.rating-section {
+  border-color: $primary $primary transparent $primary;
+  border-style: solid;
+  border-width: 8px 0 0 0px;
+}
+
+body.single-post blockquote {
+  p {
+    @extend .mb-0
+  }
+
+  @extend .p-3, .rounded, .my-4, .bg-info, .bg-opacity-25 ;
+  border-left: 10px solid $primary;
+  box-shadow: 0 0 2px rgba(254, 70, 0, 0.41)
+}
+
+.social-media li a {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  transition: background-color 0.5s ease-out;
+  path {
+    transition: fill 0.5s ease-out;
+  }
+  @extend .p-2;
+  &:hover {
+    background-color: $primary;
+
+    path {
+      fill: white !important
+    }
+  }
+}
+.page-numbers.current {
+  @extend .px-2, .py-1, .rounded
+}
+
+// gravity form
+#gform_wrapper_1 , .gform_wrapper {
+  @extend .w-100;
+  #gform_fields_1 , .gform_fields {
+    @extend .input-group, .gap-0;
+
+    #field_1_1 {
+      @extend .form-control, .py-lg-2;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+
+      input {
+        @extend .border-0;
+
+        &:focus-visible {
+          outline: 0 !important;
+        }
+      }
+    }
+
+    #field_submit {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      @extend .btn, .bg-primary, .text-white, .px-lg-5, .px-3;
+
+      input {
+        @extend .h-100, .btn, .bg-primary, .text-white;
+      }
+    }
+  }
+
+  .gform_footer.top_label {
+    display: none !important;
+  }
+}
+.next-list-item a ,.prev-list-item a, .page-numbers.current {
+color: white;
+}
+
+//swiper
+.swiper-button-next {
+  &::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40' fill='none'%3E%3Crect x='40' y='40' width='40' height='40' rx='20' transform='rotate(-180 40 40)' fill='' fill-opacity='1'/%3E%3Cpath d='M22.4325 13.1789C22.6225 13.1789 22.8125 13.2489 22.9625 13.3989L29.0325 19.4689C29.3225 19.7589 29.3225 20.2389 29.0325 20.5289L22.9625 26.5989C22.6725 26.8889 22.1925 26.8889 21.9025 26.5989C21.6125 26.3089 21.6125 25.8289 21.9025 25.5389L27.4425 19.9989L21.9025 14.4589C21.6125 14.1689 21.6125 13.6889 21.9025 13.3989C22.0425 13.2489 22.2425 13.1789 22.4325 13.1789Z' fill='%23292D32' fill-opacity='0.7'/%3E%3Cpath d='M11.4981 19.25L28.3281 19.25C28.7381 19.25 29.0781 19.59 29.0781 20C29.0781 20.41 28.7381 20.75 28.3281 20.75L11.4981 20.75C11.0881 20.75 10.7481 20.41 10.7481 20C10.7481 19.59 11.0881 19.25 11.4981 19.25Z' fill='%23292D32' fill-opacity='0.7'/%3E%3Crect x='39.5' y='39.5' width='39' height='39' rx='19.5' transform='rotate(-180 39.5 39.5)' stroke='%23292D32' stroke-opacity='0.7'/%3E%3C/svg%3E") !important;
+  }
+}
+.swiper-button-prev {
+  &::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40' fill='none'%3E%3Crect width='40' height='40' rx='20' fill='' fill-opacity='1'/%3E%3Cpath d='M17.5714 26.8211C17.3814 26.8211 17.1914 26.7511 17.0414 26.6011L10.9714 20.5311C10.6814 20.2411 10.6814 19.7611 10.9714 19.4711L17.0414 13.4011C17.3314 13.1111 17.8114 13.1111 18.1014 13.4011C18.3914 13.6911 18.3914 14.1711 18.1014 14.4611L12.5614 20.0011L18.1014 25.5411C18.3914 25.8311 18.3914 26.3111 18.1014 26.6011C17.9614 26.7511 17.7614 26.8211 17.5714 26.8211Z' fill='%23292D32' fill-opacity='0.7'/%3E%3Cpath d='M28.5019 20.75H11.6719C11.2619 20.75 10.9219 20.41 10.9219 20C10.9219 19.59 11.2619 19.25 11.6719 19.25H28.5019C28.9119 19.25 29.2519 19.59 29.2519 20C29.2519 20.41 28.9119 20.75 28.5019 20.75Z' fill='%23292D32' fill-opacity='0.7'/%3E%3Crect x='0.5' y='0.5' width='39' height='39' rx='19.5' stroke='%23292D32' stroke-opacity='0.7'/%3E%3C/svg%3E") !important;
+  }
+}
