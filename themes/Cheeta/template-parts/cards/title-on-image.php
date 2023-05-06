@@ -19,7 +19,7 @@
                 <div class="px-2">
                     <?php
                     $category_detail = get_the_category($post->ID); ?>
-                    <h5 class="fs-6 fw-bold mb-0 text-primary">
+                    <h5 class="fs-6 fw-bold mb-0">
                         <?php
                         $category_count = count($category_detail);
                         $i = 0;
