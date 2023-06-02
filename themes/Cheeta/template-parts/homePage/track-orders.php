@@ -44,12 +44,18 @@
                             <script>
                                 function barcode() {
                                     var inputData = document.getElementById("barcode");
-                                    if (inputData && inputData.value && inputData.value.length == 12) {
+                                    if (inputData && inputData.value && inputData.value.length == 12 && !(isNaN(inputData.value))) {
                                         window.open(
                                             "<?= get_field('first_link');?>" + inputData.value.toString(),
                                             "_blank"
-                                        );
-                                    } else {
+                                        )
+                                        return;
+                                    }else if (isNaN(inputData.value)) {
+                                        alert("فقط عدد مجاز است!");
+                                        return false;
+                                    }
+
+                                    else {
                                         alert("کد 12 رقمی رهگیری را وارد کنید");
                                         return;
                                     }
