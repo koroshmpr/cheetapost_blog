@@ -1,28 +1,40 @@
-import $ from "jquery";
+import $ from 'jquery';
 
 class Search {
+    // 1. describe and create/initiate our object
     constructor() {
-        this.closeButton = $(".search-overlay__close, .mobile-overlay__close , body");
+        // this.addSearchHTML();
+
+        this.openButton = $(".js-search-trigger");
+        this.closeButton = $(".search-close, .mobile-overlay__close");
         this.searchOverlay = $(".search-overlay");
-        this.searchField = $("input[type=search]");
+        this.searchField = $("input[type=search]:visible");
         this.resultsDiv = $(".search-overlay__results");
-        this.searchForm = $(".search-form");
-        this.searchForm.on("submit", (event) => this.submitForm(event));
+        this.searchSubmit = $(".search-submit");
+
+        this.searchSubmit.fadeOut()
 
         this.events();
 
         this.isOverlayOpen = false;
         this.isSpinnerVisible = false;
-        //
-        // this.previousValue;
-        // this.typingTimer;
+
+        this.previousValue;
+        this.typingTimer;
     }
 
+    // 2.events
     events() {
+        this.openButton.on("click", this.openOverlay.bind(this));
         this.closeButton.on("click", this.closeOverlay.bind(this));
-        this.searchForm.on("submit", this.submitForm.bind(this));
+
+        $(document).on("keydown", this.keyPressDispatcher.bind(this));
+
         this.searchField.on("keyup", this.typingLogic.bind(this));
     }
+
+
+    // 3. methods (function, action...)
 
     typingLogic() {
         if (this.searchField.val()) {
@@ -37,73 +49,73 @@ class Search {
 
                 }
                 this.typingTimer = setTimeout(this.getResults.bind(this), 750);
+
             } else {
                 this.resultsDiv.html('');
                 this.isSpinnerVisible = false;
+                this.searchSubmit.fadeOut()
             }
         }
         this.previousValue = this.searchField.val();
     }
 
     getResults() {
-        $.getJSON(jsData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchField.val() + '&_embed', (results) => {
+        $.getJSON(jsData.root_url + '/wp-json/search/v1/search?term=' + this.searchField.val(), (results) => {
             this.resultsDiv.html(`
-            <div class="pt-3">
-                <div class="g-3">
-                    <!-- POSTS -->
-                    <div class="container">
-                    <h5 class="mb-2 text-center fw-bold fs-3">مقالات</h5>
-                    ${results.length ? '<div class="row row-cols-lg-3 row-cols-1 py-4">' : '<p class="p-2' +
-                ' m-0' +
-                ' border-top">هیچ مقاله ای یافت' +
-                ' نشد</p>'}
-                    ${results.map(item =>
-                `<a class="my-2" href="${item.link}" alt="${item.title.rendered}">
-                            <div class="card p-2 border-top shadow-sm my-2">
-                                <div class="row gx-2 gy-0 align-items-center">
-                                    <div class="col-3">
-                                        <div class="ratio ratio-1x1">
-                                            <img src="${item._embedded['wp:featuredmedia'][0].source_url}"
-                                                 class="rounded object-fit"
-                                                 alt="${item.title.rendered}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="vstack h-100 py-2">
-                                            <h6 class="text-primary fw-bold fw-4 mb-1">${item.title.rendered}</h6>
-                                            <p class="text-muted">${item.content.rendered.split(' ').slice(0, 18).join(' ')}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="pt-3 container">
+                        <h5  class="mb-2 fw-bold text-center">مقالات</h5>
+                        ${results.post.length ? '<div class="row row-cols-1 row-cols-lg-4 row-cols-md-2">' : '<p class="p-2 m-0 border-top">هیچ مقاله ای یافت نشد</p>'}
+                        ${results.post.map((item, index) =>
+                `
+                    <article class="px-4" title="${item.title}">
+                        <a class="border border-1 px-2 py-3 rounded row align-items-center" href="${item.url}">
+                            <div><img class="w-100 object-fit rounded" height="200" src="${item.img}" alt="${item.title}" /></div>
+                            <div class="pt-2">
+                                    <h6 class="fw-bold fs-5 text-primary">${item.title}</h6>
+                                    <div class="small"><p>${item.content}</p></div>
                             </div>
-                        </a>`
-            ).join('')}
-                    ${results.length ? '</div>' : ''}
-                    </div>
+                        </a>
+                    </article>`
+            ).join(' ')}
+                        ${results.post.length ? '</div>' : ''}
                 </div>
-            </div>
-        `)
+            `)
             this.isSpinnerVisible = false;
+            this.searchSubmit.fadeIn()
         });
     }
-    openOverlay() {
-        this.searchField.val('');
-        setTimeout(() => this.searchField.focus(), 301);
-        this.isOverlayOpen = true;
-        return false;
-    }
-    closeOverlay() {
-        this.resultsDiv.html('');
-        // this.searchField.val('');
-        this.isOverlayOpen = false;
-    }
-    submitForm() {
-        const searchTerm = this.searchField.val();
-        if (searchTerm) {
-            window.location.href = jsData.root_url + "/?s=" + searchTerm;
+
+    keyPressDispatcher(e) {
+        if (e.keyCode == 83 && !this.isOverlayOpen && !$("input, textarea").is(':focus')) {
+            this.openOverlay();
+        }
+        if (e.keyCode == 27 && this.isOverlayOpen) {
+            this.closeOverlay();
         }
     }
+
+    openOverlay() {
+        this.searchOverlay.addClass("search-overlay--active");
+        $("body").addClass("body-no-scroll");
+
+        this.searchField.val('');
+
+        setTimeout(() => this.searchField.focus(), 301);
+
+        this.isOverlayOpen = true;
+        return false;
+
+    }
+
+    closeOverlay() {
+        this.searchOverlay.removeClass("search-overlay--active");
+        $("body").removeClass("body-no-scroll");
+        this.resultsDiv.html('');
+        $(".mobile-overlay__close").addClass('d-none');
+        this.searchField.val('');
+        this.isOverlayOpen = false;
+    }
+
 
 }
 

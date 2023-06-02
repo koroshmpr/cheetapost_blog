@@ -19,13 +19,13 @@
                         </button>
                     </li>
                     <li class="nav-item">
-                        <a href="https://services.cheetapost.com/pricing" class="nav-link nav-link fw-bold">استعلام قیمت</a>
+                        <a href="<?= get_field('second_link');?>" class="nav-link nav-link fw-bold">استعلام قیمت</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://services.cheetapost.com/login" class="nav-link nav-link fw-bold">ارسال بسته</a>
+                        <a href="<?= get_field('third_link');?>" class="nav-link nav-link fw-bold">ارسال بسته</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://cheetapost.com/agencies/" class="nav-link nav-link fw-bold" >نمایندگی</a>
+                        <a href="<?= get_field('fourth_link');?>" class="nav-link nav-link fw-bold" >نمایندگی</a>
                     </li>
                 </ul>
                 <div class="tab-content pt-4">
@@ -36,7 +36,7 @@
                                        placeholder="name@example.com">
                                 <label for="rahgiri">کد رهگیری</label>
                             </div>
-                            <a href="https://cheeta.frotel.com/"
+                            <a href="<?= get_field('first_link');?>"
                                class="btn text-primary fw-bold fs-6 position-absolute end-0 top-50 translate-middle text-shadow"
                                type="button" id="button-addon1">رهگیری
                             </a>

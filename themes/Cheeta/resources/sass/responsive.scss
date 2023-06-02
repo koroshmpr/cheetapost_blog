@@ -3,7 +3,7 @@
     .card__title-on-image {
       transition: all 0.5s ease-in-out;
       .info_card {
-        box-shadow: inset 0 -70px 20px 0px #00000075;
+        box-shadow: inset 0 -70px 20px 0px rgba(0, 0, 0, 0.62);
         transition: box-shadow 0.5s ease-in-out;
         .col-11 , h5 {
         transition: opacity 0.5s ease-in-out;
@@ -12,7 +12,7 @@
       }
       &:hover {
         .info_card {
-          box-shadow: inset 0 -100px 40px 0px #00000061, inset 0 100px 40px 0px #00000069;
+          box-shadow: inset 0 -100px 40px 0px rgba(0, 0, 0, 0.62), inset 0 100px 40px 0px rgba(0, 0, 0, 0.62);
           .col-11 , h5 {
           opacity: 1;
           }
@@ -24,7 +24,7 @@
 @include media-breakpoint-down(lg) {
   .hero-section {
     .card__title-on-image {
-      box-shadow: inset 0 -100px 40px 0px rgba(0, 0, 0, 0.21), inset 0 100px 40px 0px rgba(0, 0, 0, 0.21);
+      box-shadow: inset 0 -100px 40px 0px rgba(0, 0, 0, 0.38), inset 0 100px 40px 0px rgba(0, 0, 0, 0.38);
     }
     }
 

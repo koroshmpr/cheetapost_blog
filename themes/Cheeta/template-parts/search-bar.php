@@ -5,7 +5,6 @@
             <i class="bi bi-search fs-5"></i>
         </button>
     </div>
-    <button type="button" class="btn-close bg-primary text-reset mobile-overlay__close d-none p-2"></button>
 </form>
 
 <div class="position-absolute bg-white container-fluid top-100 start-50 translate-middle-x overflow-scroll search-overlay__results z-top search-box-overflow">

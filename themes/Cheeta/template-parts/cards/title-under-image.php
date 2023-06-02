@@ -18,7 +18,7 @@
         <div>
             <div>
                 <h5 class="fs-5 fw-bold"> <?= get_the_title(); ?></h5>
-                <p class="fs-6"><?= wp_trim_words(get_the_content(), 23); ?></p>
+                <p class="fs-6 text-justify"><?= wp_trim_words(get_the_content(), 35); ?></p>
             </div>
         </div>
     </a>
