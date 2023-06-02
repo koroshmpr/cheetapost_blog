@@ -7,6 +7,6 @@
     </div>
 </form>
 
-<div class="position-absolute bg-white container-fluid top-100 start-50 translate-middle-x overflow-scroll search-overlay__results z-top search-box-overflow">
+<div class="position-absolute bg-white container-fluid top-100 start-50 translate-middle-x overflow-scroll search-overlay__results z-top search-box-overflow pb-5">
 
 </div>

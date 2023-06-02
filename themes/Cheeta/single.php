@@ -110,13 +110,13 @@ while (have_posts()) :
                                 ?>
                             </div>
                         </div>
-                        <div class="d-flex gap-2 align-items-stretch justify-content-center">
-                            <a href="#comment-section" class="rounded d-flex align-items-center shadow-sm px-2"><i
-                                        class="bi bi-chat-square-dots me-2"></i> <?= $comment_count; ?></a>
-                            <div class="d-none d-lg-inline vr bg-opacity-50 bg-dark"></div>
-                            <a class="btn shadow-sm" href="#share-section"><i class="bi bi-share"></i></a>
-                        </div>
                     </div>
+                    <script>
+                        // Add a dynamic query parameter to the rating value script URL
+                        var script = document.createElement('script');
+                        script.src = '/path/to/rating-value-script.js?t=' + Date.now();
+                        document.head.appendChild(script);
+                    </script>
                 </div>
                 <!--                thumbnail-->
                 <div class="img-fluid">
@@ -132,7 +132,7 @@ while (have_posts()) :
                 <!--                rating-->
                 <div class="rating-section p-3 rounded bg-info bg-opacity-25 d-flex justify-content-between align-items-center my-5">
                     <p class="mb-0 fw-bold">چه میزان از این مقاله لذت بردید</p>
-                    <div class="rating">
+                    <div class="set rating">
                         <?php
                         $post_id = get_the_ID();
                         $rating_value = get_post_meta($post_id, 'rating_value', true);
@@ -147,7 +147,7 @@ while (have_posts()) :
                     </div>
                     <script>
                         jQuery(document).ready(function ($) {
-                            $('.rating .star').click(function () {
+                            $('.set.rating .star').click(function () {
                                 $(this).prevAll('.star').addBack().find('i').removeClass('bi-star').addClass('bi-star-fill');
                                 $(this).nextAll('.star').find('i').removeClass('bi-star-fill').addClass('bi-star');
                                 var ratingValue = $(this).index() + 1;
