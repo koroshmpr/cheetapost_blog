@@ -42,15 +42,40 @@ if ($loop->have_posts()) :
         $loop->the_post(); ?>
         <div class="modal fade" id="exampleModal<?php the_ID(); ?>" tabindex="-1"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-transparent border-2 border-primary rounded-0">
                     <div class="modal-body">
-                        <video class="w-100 rounded" src="<?= get_field('podcast_video')['url']; ?>"
-                               controls allowfullscreen></video>
+                        <?php if (get_field('podcast-type') == 'internal') { ?>
+                            <video class="w-100 my-4 rounded" src="<?php echo get_field('podcast_video')['url']; ?>" controls
+                                   allowfullscreen></video>
+                        <?php } ?>
+                        <?php  if (get_field('podcast-type') == 'embed') {
+                            echo get_field('podcast_embed');
+                        } ?>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            // Add event listener for modal close event
+            jQuery('#exampleModal<?php the_ID(); ?>').on('hidden.bs.modal', function () {
+                // Pause or stop the video when the modal is closed
+                <?php if (get_field('podcast-type') == 'internal') { ?>
+                var videoElement = document.querySelector('#exampleModal<?php the_ID(); ?> video');
+                if (videoElement) {
+                    videoElement.pause();
+                }
+                <?php } ?>
+                <?php if (get_field('podcast-type') == 'embed') { ?>
+                var iframeElement = document.querySelector('#exampleModal<?php the_ID(); ?> iframe');
+                if (iframeElement) {
+                    var iframeSrc = iframeElement.getAttribute('src');
+                    // Replace 'autoplay=1' with 'autoplay=0' to stop the video
+                    iframeElement.setAttribute('src', iframeSrc.replace('autoplay=1', 'autoplay=0'));
+                }
+                <?php } ?>
+            });
+        </script>
     <?php
     endwhile;
 endif;

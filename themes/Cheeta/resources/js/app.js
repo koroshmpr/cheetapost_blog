@@ -48,7 +48,7 @@ $(document).ready(function () {
                 $('.sticky-post__detail').addClass('d-none');
 
             }
-                })
+                });
     }
 );
 // When the user scrolls the page, execute myFunction

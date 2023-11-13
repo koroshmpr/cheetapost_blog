@@ -57,21 +57,52 @@ while (have_posts()) :
                     <div class="d-flex gap-2 align-items-center justify-content-start py-3">
                         <?php get_template_part('template-parts/cards/post-detail/author-image'); ?>
                         <div>
-                            <div class="fs-6">
-                                ارسال توسط
-                                <span class="fw-bold">
-                                 <?= get_the_author_meta('display_name', $post->post_author); ?>
-                                </span>
-                            </div>
-                            <div class="fw-normal fs-6 d-lg-flex">
+                            <h4 class="fs-5">
+                            <?php
+                            if (get_field('podcast-type') == 'embed') {
+                                $iframeSrc = get_field('podcast_embed');
+                            }
+                            if (get_field('podcast-type') == 'internal ') {
+                                $iframeSrc = get_field('podcast_video');
+                            }
+
+                            // Extract the iframe URL using regular expressions
+                            preg_match('/<iframe[^>]+src=([\'"])(?<src>.+?)\1/', $iframeSrc, $matches);
+                            if (isset($matches['src'])) {
+                                $iframeUrl = $matches['src'];
+
+                                // Extract the video hash from the iframe URL
+                                preg_match('/\/videohash\/([^\/]+)/', $iframeUrl, $hashMatches);
+                                if (isset($hashMatches[1])) {
+                                    $videoHash = $hashMatches[1];
+
+                                    // Make a request to the Aparat API to fetch video metadata
+                                    $apiUrl = "https://www.aparat.com/etc/api/video/videohash/{$videoHash}";
+                                    $apiResponse = wp_remote_get($apiUrl);
+
+                                    if (!is_wp_error($apiResponse)) {
+                                        $apiBody = wp_remote_retrieve_body($apiResponse);
+                                        $apiData = json_decode($apiBody);
+
+                                        if (isset($apiData->video->duration)) {
+                                            $videoDuration = $apiData->video->duration;
+
+                                            // Convert the duration to clock format
+                                            $durationInSeconds = intval($videoDuration);
+                                            $hours = floor($durationInSeconds / 3600);
+                                            $minutes = floor(($durationInSeconds % 3600) / 60);
+                                            $seconds = $durationInSeconds % 60;
+                                            $formattedDuration = sprintf("%02d:%02d:%02d", $hours, $minutes, $seconds);
+
+                                            echo 'زمان پادکست : ' . $formattedDuration;
+                                        }
+                                    }
+                                }
+                            }
+                            ?>
+                            </h4>
+                            <div class="fw-normal fs-6">
                                 <?php echo get_the_date('d  F , Y'); ?>
-                                <span class="d-flex px-lg-2 align-items-center">
-                                زمان مطالعه :
-                                <h6 class="fw-bold mx-1 my-0">
-                                    <?= reading_time(); ?>
-                                </h6>
-                                دقیقه
-                                 </span>
                             </div>
                         </div>
                     </div>
@@ -129,8 +160,13 @@ while (have_posts()) :
                     <?= the_content(); ?>
                     <div class="pb-3" id="share-section"></div>
                 </article>
-                <video class="w-100 my-4 rounded" src="<?php echo get_field('podcast_video')['url']; ?>" controls
-                       allowfullscreen></video>
+                <?php if (get_field('podcast-type') == 'internal') { ?>
+                    <video class="w-100 my-4 rounded" src="<?php echo get_field('podcast_video')['url']; ?>" controls
+                           allowfullscreen></video>
+                <?php } ?>
+                <?php if (get_field('podcast-type') == 'embed') {
+                    echo get_field('podcast_embed');
+                } ?>
                 <!--                rating-->
                 <div class="rating-section p-3 rounded bg-info bg-opacity-25 d-flex justify-content-between align-items-center my-5">
                     <p class="mb-0 fw-bold">چه میزان از این مقاله لذت بردید</p>

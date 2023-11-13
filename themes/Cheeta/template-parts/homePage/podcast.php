@@ -25,7 +25,7 @@
                     <div class="col-12 col-lg-7">
                         <article class="rounded card__title-on-image object-fit position-relative"
                                  style="background-image: url('<?php echo the_post_thumbnail_url(); ?>')">
-                            <span class="position-absolute top-50 start-50 translate-middle fs-3"
+                            <span class="position-absolute top-50 start-50 translate-middle fs-3 play-svg"
                                   data-bs-toggle="modal" data-bs-target="#exampleModal<?php the_ID(); ?>">
                              <?php
                              $size = 100;
@@ -33,21 +33,21 @@
                              ?>
 
                             </span>
-                            <a href="<?php the_permalink(); ?>"
+                            <a href="<?php the_permalink(); ?>" style="backdrop-filter: brightness(0.9)"
                                class="d-flex h-100 flex-column justify-content-between p-3 align-items-start">
                                 <div class="col-11 d-flex gap-2 align-items-center justify-content-start">
                                     <?php get_template_part('template-parts/cards/post-detail/author-image'); ?>
-                                    <div>
-                                        <div class="fs-6 text-center">
-                                            ارسال توسط
-                                            <span class="fw-bolder">
-                        <?php echo get_the_author_meta('display_name', $post->post_author); ?>
-                    </span>
-                                        </div>
-                                        <div class="fw-normal fs-6">
-                                            <?php echo get_the_date('d  F , Y'); ?>
-                                        </div>
-                                    </div>
+<!--                                    <div>-->
+<!--                                        <div class="fs-6 text-center">-->
+<!--                                            ارسال توسط-->
+<!--                                            <span class="fw-bolder">-->
+<!--                                                --><?php //echo get_the_author_meta('display_name', $post->post_author); ?>
+<!--                                            </span>-->
+<!--                                        </div>-->
+<!--                                        <div class="fw-normal fs-6">-->
+<!--                                            --><?php //echo get_the_date('d  F , Y'); ?>
+<!--                                        </div>-->
+<!--                                    </div>-->
 
                                 </div>
                                 <div>
@@ -94,7 +94,7 @@
                     while ($loop->have_posts()) :
                         $loop->the_post(); ?>
                         <div class="col-12">
-                            <a class="card__title-side-image" href="<?php the_permalink(); ?>">
+                            <div class="card__title-side-image">
                                 <div class="row gap-2 align-items-center justify-content-center">
                                     <div class="position-relative col-4 rounded p-0 overflow-hidden">
                                         <img class="w-100 object-fit" src="<?php echo the_post_thumbnail_url(); ?>"
@@ -107,10 +107,10 @@
                                            ?>
                                         </span>
                                     </div>
-                                    <div class="row gap-2 col">
+                                    <a class="row gap-2 col" href="<?php the_permalink(); ?>">
                                         <div class="d-flex gap-2 align-items-center px-0">
                                             <?php
-                                            $category_detail = get_the_terms($post->ID, 'podcast_categories');?>
+                                            $category_detail = get_the_terms($post->ID, 'podcast_categories'); ?>
                                             <h5 class="fs-6 mb-0 text-white">
                                                 <?php
                                                 $category_count = count($category_detail);
@@ -130,9 +130,9 @@
                                             </span>
                                         </div>
                                         <p class="fs-6 mb-0 text-dark px-0 text-white"><?= get_the_title(); ?></p>
-                                    </div>
+                                    </a>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     <?php
                     endwhile;

@@ -15,14 +15,16 @@
                     <p class="mb-1 d-none d-lg-inline"><?= get_the_title(); ?></p>
                     <div class="fw-normal fs-6 d-lg-flex">
                         <?php echo get_the_date('d  F , Y'); ?>
-                        .
-                        <span class="d-flex px-2 align-items-center">
+                        <?php if (is_singular('post')) {?>
+                            <span class="d-flex px-2 align-items-center">
                                 زمان مطالعه :
                                 <h6 class="fw-bold mx-1 my-0">
                                     <?= reading_time(); ?>
                                 </h6>
                                 دقیقه
                                  </span>
+                        <?php }?>
+
                     </div>
                 </div>
 

@@ -1,14 +1,30 @@
 <div class="row gap-2">
-    <h4 class="fw-bold">آخرین مقالات</h4>
+    <?php if (is_singular('podcast')) {?>
+    <h4 class="fw-bold">آخرین پادکست‌ها</h4>
+    <?php }?>
+    <?php if (is_singular('post')) {?>
+        <h4 class="fw-bold">آخرین مقالات</h4>
+    <?php }?>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-1 g-2">
     <?php
-    $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        'order' => 'DESC',
-        'posts_per_page' => '3',
-        'ignore_sticky_posts' => true
-    );
+    if (is_singular('podcast')) {
+        $args = array(
+            'post_type' => 'podcast',
+            'post_status' => 'publish',
+            'order' => 'DESC',
+            'posts_per_page' => '3',
+            'ignore_sticky_posts' => true
+        );
+    }
+    else{
+        $args = array(
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'order' => 'DESC',
+            'posts_per_page' => '3',
+            'ignore_sticky_posts' => true
+        );
+    }
     $loop = new WP_Query($args);
     if ($loop->have_posts()) :
         $i = 0;
